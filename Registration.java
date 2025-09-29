@@ -274,4 +274,3 @@ public class Registration extends JFrame {
         SwingUtilities.invokeLater(Registration::new);
     }
 }
-//test
