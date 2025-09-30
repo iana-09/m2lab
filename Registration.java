@@ -5,6 +5,7 @@ import java.awt.event.*;
 import java.io.*;
 import java.util.*;
 
+// not sure if java or js
 public class Registration extends JFrame {
     private JTextField txtName, txtEmail, txtContact;
     private JComboBox<String> cbCourse, cbYear, cbCountry, cbCity, cbBarangay;
