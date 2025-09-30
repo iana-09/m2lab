@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FEU Registration Form</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 font-sans">
+    <div
+      class="max-w-lg mx-auto my-10 bg-white rounded-2xl shadow-lg overflow-hidden"
+    >
+      <!-- Header -->
+      <div
+        class="bg-gradient-to-r from-green-800 to-yellow-500 text-white text-center py-6"
+      >
+        <h1 class="text-2xl font-bold">FEU Alabang Registration Form</h1>
+      </div>
+
+      <!-- Form -->
+      <form id="registrationForm" class="p-6 space-y-4">
+        <!-- Name -->
+        <div>
+          <label class="block font-semibold mb-1">Name:</label>
+          <input
+            type="text"
+            id="name"
+            required
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          />
+        </div>
+
+        <!-- Course -->
+        <div>
+          <label class="block font-semibold mb-1">Course:</label>
+          <select
+            id="course"
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          >
+            <option>Bachelor of Science in Accountancy</option>
+            <option>BSBA - Financial Management & Business Analytics</option>
+            <option>BSBA - Marketing Management & Multimedia Design</option>
+            <option>BSBA - Operations & Service Management</option>
+            <option>BSc Computer Science - Software Engineering</option>
+            <option>BSc Computer Science - Artificial Intelligence</option>
+            <option>BSc Computer Science - Data Science</option>
+            <option>BSc Multimedia Arts - Animation & Digital Film</option>
+            <option>
+              BSc Information Technology - Animation & Game Development
+            </option>
+            <option>
+              BSc Information Technology - Web & Mobile Applications
+            </option>
+            <option>BSc Information Technology - Business Analytics</option>
+            <option>BSc Information Technology - Innovation & Business</option>
+            <option>BSc Information Technology - Cybersecurity</option>
+            <option>BSc Civil Engineering</option>
+            <option>BSc Computer Engineering</option>
+            <option>BSc Electrical Engineering</option>
+            <option>BSc Electronics Engineering</option>
+            <option>BSc Mechanical Engineering</option>
+          </select>
+        </div>
+
+        <!-- Year -->
+        <div>
+          <label class="block font-semibold mb-1">Year:</label>
+          <select
+            id="year"
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          >
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+        </div>
+
+        <!-- Gender -->
+        <div>
+          <label class="block font-semibold mb-1">Gender:</label>
+          <div class="flex gap-6 mt-1">
+            <label class="flex items-center gap-2">
+              <input type="radio" name="gender" value="Male" /> Male
+            </label>
+            <label class="flex items-center gap-2">
+              <input type="radio" name="gender" value="Female" /> Female
+            </label>
+          </div>
+        </div>
+
+        <!-- City -->
+        <div>
+          <label class="block font-semibold mb-1">City:</label>
+          <select
+            id="city"
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          ></select>
+        </div>
+
+        <!-- Barangay -->
+        <div>
+          <label class="block font-semibold mb-1">Barangay:</label>
+          <select
+            id="barangay"
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          ></select>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label class="block font-semibold mb-1">Email:</label>
+          <input
+            type="email"
+            id="email"
+            required
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          />
+        </div>
+
+        <!-- Contact Number -->
+        <div>
+          <label class="block font-semibold mb-1">Contact Number:</label>
+          <input
+            type="text"
+            id="contact"
+            maxlength="11"
+            required
+            class="w-full px-4 py-2 border-2 border-green-800 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+          />
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-center gap-4 pt-4">
+          <button
+            type="button"
+            onclick="register()"
+            class="bg-green-700 hover:bg-green-800 text-white font-bold px-6 py-2 rounded-lg"
+          >
+            REGISTER
+          </button>
+          <button
+            type="reset"
+            class="bg-yellow-400 hover:bg-yellow-500 text-black font-bold px-6 py-2 rounded-lg"
+          >
+            CLEAR
+          </button>
+          <button
+            type="button"
+            onclick="exitForm()"
+            class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2 rounded-lg"
+          >
+            EXIT
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // 🟢 City + Barangay Data
+      const locationData = {
+        "Quezon City": ["Brgy 1", "Brgy 2", "Brgy 3"],
+        Manila: ["Ermita", "Malate", "Tondo"],
+        Cebu: ["Lahug", "Mabolo", "Talamban"],
+      };
+
+      const citySelect = document.getElementById("city");
+      const barangaySelect = document.getElementById("barangay");
+
+      function loadCities() {
+        for (let city in locationData) {
+          let opt = document.createElement("option");
+          opt.value = city;
+          opt.textContent = city;
+          citySelect.appendChild(opt);
+        }
+        updateBarangays();
+      }
+
+      function updateBarangays() {
+        barangaySelect.innerHTML = "";
+        const city = citySelect.value;
+        if (city && locationData[city]) {
+          locationData[city].forEach((brgy) => {
+            let opt = document.createElement("option");
+            opt.value = brgy;
+            opt.textContent = brgy;
+            barangaySelect.appendChild(opt);
+          });
+        }
+      }
+
+      citySelect.addEventListener("change", updateBarangays);
+
+      function register() {
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const contact = document.getElementById("contact").value.trim();
+        const gender = document.querySelector(
+          "input[name='gender']:checked"
+        )?.value;
+
+        if (!name || !email || !contact || !gender) {
+          alert("All fields are required!");
+          return;
+        }
+        if (!/^[A-Za-z0-9+_.-]+@(.+)$/.test(email)) {
+          alert("Invalid email format!");
+          return;
+        }
+        if (!/^\d{11}$/.test(contact)) {
+          alert("Contact number must be 11 digits!");
+          return;
+        }
+
+        alert("✅ Registration successful!");
+      }
+
+      function exitForm() {
+        if (confirm("Are you sure you want to exit?")) {
+          window.close();
+        }
+      }
+
+      loadCities();
+    </script>
+  </body>
+</html>
